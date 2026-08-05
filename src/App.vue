@@ -200,4 +200,55 @@ label {
   align-content: center;
 
 }
+
+@media (max-width: 600px) {
+  .calculadora {
+    width: 90%;
+    margin: 0 20px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    padding: 25px 15px;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .campo-preenchimento {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .inserir {
+    flex-direction: column;
+    font-size: 18px;
+  }
+
+  .campo {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+  }
+
+  select {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  label {
+    margin: 0;
+    font-size: 18px;
+  }
+
+  span {
+    font-size: 28px;
+    padding: 15px;
+  }
+}
 </style>
