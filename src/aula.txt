@@ -1,0 +1,120 @@
+<script setup>
+import { reactive } from 'vue'
+import { walk } from 'vue/compiler-sfc'
+
+const nome = 'Bianca Semedo'
+const meuObjeto = {
+  nome: 'Bianca',
+  bandaFavorita: 'FATM',
+}
+
+function dizOla(nome) {
+  return `${nome} diz oi`
+}
+
+const  enderecoImageSV = "https://upload.wikimedia.org/wikipedia/en/f/fd/Logo_of_Stardew_Valley.png"
+const botaoDesabilitado = false
+const gostaDeSV = true
+
+// let contador = 0
+
+const estado = reactive ({
+  contador: 0,
+  email: '',
+  saldo: 5000,
+  tasks: [],
+})
+
+function incrementar(){
+  estado.contador++;
+}
+
+function decrementar(){
+  estado.contador--;
+}
+
+function alteraEmail (evento){
+estado.email = evento.target.value
+}
+
+function mostraSaldoFuturo(){
+  const { saldo, transferindo } = estado;
+  return saldo - transferindo;
+}
+
+function validarTransferencia(){
+  const { saldo, transferindo } = estado;
+  return saldo >= transferindo;
+}
+
+function newTask() {
+  if (estado.novaTarefa.length > 0) {
+    estado.tasks.push(estado.novaTarefa)
+    estado.novaTarefa = ''
+  } else {
+    alert("Digite mais caracteres")
+  }
+}
+
+</script>
+
+<template>
+  <h1>{{ dizOla ("Bianca Semedo")}}</h1>
+  <img v-if="gostaDeSV" :src="enderecoImageSV" alt="">
+
+  <button :disabled="botaoDesabilitado">Instalar</button>
+
+<br /> 
+<hr /> 
+
+{{ estado.contador }}
+<button @click="incrementar" type="button">+</button>
+<button @click="decrementar" type="button">-</button>
+
+<br /> 
+<hr /> 
+
+{{ estado.email }}
+<input type="email" @keyup="alteraEmail">
+
+<br /> 
+<hr /> 
+
+Saldo: {{ estado.saldo }} <br />
+Transferência: {{ estado.transferindo }} <br />
+Saldo depois da operação: {{ mostraSaldoFuturo () }} <br />
+<input class="validacao" :class="{invalido: !validarTransferencia() }" @keyup="evento => estado.transferindo = evento.target.value" type="number">
+<button v-if="validarTransferencia()">Transferir</button>
+<span v-else>Valor excede o saldo</span>
+
+<br />
+<hr />
+
+<ul>
+  <li v-for="tarefa in estado.tasks" :key="tarefa">
+    {{ tarefa }}
+  </li>
+</ul>
+<input @keyup="evento => estado.novaTarefa = evento.target.value" type="text" placeholder="O que você quer fazer hoje?">
+<button @click="newTask" type="button">Adicionar nova tarefa</button>
+
+
+</template>
+
+<style scoped>
+
+.validacao {
+  color: green;
+  border-color: green;
+  outline-color: green;
+}
+
+.invalido {
+outline-color: red;
+border-color: red;
+color: red;
+}
+
+
+
+</style>
